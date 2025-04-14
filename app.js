@@ -16,6 +16,14 @@ let currentLeader = null;
 let currentDeck = [];
 let drawnCards = 0;
 
+function preloadImages() {
+    const images = [...leaders, ...playDeck];
+    images.forEach(image => {
+        const img = new Image();
+        img.src = `images/Deck/${image}`;
+    });
+}
+
 function shuffle(array) {
     return array.sort(() => Math.random() - 0.5);
 }
@@ -27,8 +35,8 @@ function newGame() {
     document.getElementById('leaderCard').src = 'images/Leaders/LeaderCardBack.png';
     document.getElementById('playDeckCard').src = 'images/Deck/DeckCardBack.png';
     document.getElementById('playDeckInfo').textContent = `Cards Drawn: ${drawnCards}`;
-    document.getElementById('lastDrawnCard').src = 'images/Deck/DeckCardBack.png'; // Reset to back
-    document.getElementById('lastDrawnCard').classList.add('opacity-0'); // Hide initially
+    document.getElementById('lastDrawnCard').src = 'images/Deck/DeckCardBack.png';
+    document.getElementById('lastDrawnCard').classList.add('opacity-0');
     document.getElementById('reshuffleBtn').disabled = true;
     document.getElementById('reshuffleBtn').classList.replace('bg-blue-500', 'bg-gray-400');
 }
@@ -57,12 +65,11 @@ document.getElementById('reshuffleBtn').addEventListener('click', () => {
     currentDeck = shuffle([...playDeck]);
     drawnCards = 0;
     document.getElementById('playDeckInfo').textContent = `Cards Drawn: ${drawnCards}`;
-    document.getElementById('lastDrawnCard').src = 'images/Deck/DeckCardBack.png'; // Reset to back
-    document.getElementById('lastDrawnCard').classList.add('opacity-0'); // Hide again
+    document.getElementById('lastDrawnCard').src = 'images/Deck/DeckCardBack.png';
+    document.getElementById('lastDrawnCard').classList.add('opacity-0');
     document.getElementById('reshuffleBtn').disabled = true;
     document.getElementById('reshuffleBtn').classList.replace('bg-blue-500', 'bg-gray-400');
 });
 
-// Initialize the game on page load
+preloadImages();
 newGame();
-
